@@ -21,11 +21,6 @@ module Lita
             command: true,
             help: {'taps >4%' => 'Display beers over 4% ABV.'}
 
-      route /^tinbucket ([<>=\$\w.\s]+)$/i,
-            :taps_by_price,
-            command: true,
-            help: {'taps <$5' => 'Display beers under $5.'}
-
       route /^tinbucket (roulette|random|rand|ran|ra|r)$/i,
             :taps_by_random,
             command: true,

@@ -5,10 +5,6 @@ describe Lita::Handlers::OnewheelBeerTinBucket, lita_handler: true do
   it { is_expected.to route_command('tinbucket 4') }
   it { is_expected.to route_command('tinbucket nitro') }
   it { is_expected.to route_command('tinbucket CASK') }
-  it { is_expected.to route_command('tinbucket <$4') }
-  it { is_expected.to route_command('tinbucket < $4') }
-  it { is_expected.to route_command('tinbucket <=$4') }
-  it { is_expected.to route_command('tinbucket <= $4') }
   it { is_expected.to route_command('tinbucket >4%') }
   it { is_expected.to route_command('tinbucket > 4%') }
   it { is_expected.to route_command('tinbucket >=4%') }
@@ -62,83 +58,45 @@ describe Lita::Handlers::OnewheelBeerTinBucket, lita_handler: true do
   it 'searches for abv >= 9%' do
     send_command 'tinbucket >= 9%'
     expect(replies.count).to eq(8)
-    expect(replies.last).to eq('tinbucket tap 46) Sump - Imp Coffee Stout 10.5%, $5')
+    expect(replies.last).to eq('Tin Bucket tap 16) Hawaiian Speedway Stout 12.0%')
   end
 
   it 'searches for abv <4.1%' do
     send_command 'tinbucket <4.1%'
-    expect(replies.count).to eq(2)
-    expect(replies.last).to eq('tinbucket tap 38) Prairie-Vous Francais - Saison   Just Tapped 3.9%, $5')
+    expect(replies.count).to eq(1)
+    expect(replies.last).to eq('Tin Bucket tap 19) Ales Vous Francais 4.0%')
   end
 
   it 'searches for abv <= 4%' do
     send_command 'tinbucket <= 4%'
-    expect(replies.count).to eq(2)
-    expect(replies[0]).to eq('tinbucket tap 15) Grapefruit Radler 2.5%, $5')
-    expect(replies.last).to eq('tinbucket tap 38) Prairie-Vous Francais - Saison   Just Tapped 3.9%, $5')
-  end
-
-  it 'searches for prices >$5' do
-    send_command 'tinbucket >$5'
-    expect(replies.count).to eq(11)
-    expect(replies[0]).to eq('tinbucket tap 4) Blind Pig - IPA 6.1%, $6')
-    expect(replies[1]).to eq('tinbucket tap 21) Kristallweissbier 5.4%, $6')
-  end
-
-  it 'searches for prices >=$6' do
-    send_command 'tinbucket >=$6'
-    expect(replies.count).to eq(11)
-    expect(replies[0]).to eq('tinbucket tap 4) Blind Pig - IPA 6.1%, $6')
-  end
-
-  it 'searches for prices > $6' do
-    send_command 'tinbucket > $6'
-    expect(replies.count).to eq(3)
-    expect(replies[0]).to eq('tinbucket tap 29) Nitro- Shake - Choco Porter 5.9%, $8')
-  end
-
-  it 'searches for prices <$4.1' do
-    send_command 'tinbucket <$4.1'
-    expect(replies.count).to eq(4)
-    expect(replies[0]).to eq('tinbucket tap 8) Cheap, cold 4.7%, $3')
-  end
-
-  it 'searches for prices < $4.01' do
-    send_command 'tinbucket < $4.01'
-    expect(replies.count).to eq(4)
-    expect(replies[0]).to eq('tinbucket tap 8) Cheap, cold 4.7%, $3')
-  end
-
-  it 'searches for prices <= $4.00' do
-    send_command 'tinbucket <= $4.00'
-    expect(replies.count).to eq(4)
-    expect(replies[0]).to eq('tinbucket tap 8) Cheap, cold 4.7%, $3')
+    expect(replies.count).to eq(1)
+    expect(replies.last).to eq('Tin Bucket tap 19) Ales Vous Francais 4.0%')
   end
 
   it 'runs a random beer through' do
     send_command 'tinbucket roulette'
     expect(replies.count).to eq(1)
-    expect(replies.last).to include('tinbucket tap')
+    expect(replies.last).to include('Tin Bucket tap')
   end
 
   it 'runs a random beer through' do
     send_command 'tinbucket random'
     expect(replies.count).to eq(1)
-    expect(replies.last).to include('tinbucket tap')
+    expect(replies.last).to include('Tin Bucket tap')
   end
 
   it 'searches with a space' do
-    send_command 'tinbucket cider riot'
-    expect(replies.last).to eq('tinbucket tap 10) Cider- NeverGiveAnInch -Rosé  6.9%, $5')
+    send_command 'tinbucket GLORIA'
+    expect(replies.last).to eq('Tin Bucket tap 1) Gloria! 5.0%')
   end
 
   it 'displays low abv' do
     send_command 'tinbucketabvhigh'
-    expect(replies.last).to eq('tinbucket tap 31) Notorious - IIIPA 11.5%, $5')
+    expect(replies.last).to eq('Tin Bucket tap 11) BOMB! 14.0%')
   end
 
   it 'displays high abv' do
     send_command 'tinbucketabvlow'
-    expect(replies.last).to eq('tinbucket tap 15) Grapefruit Radler 2.5%, $5')
+    expect(replies.last).to eq('Tin Bucket tap 19) Ales Vous Francais 4.0%')
   end
 end

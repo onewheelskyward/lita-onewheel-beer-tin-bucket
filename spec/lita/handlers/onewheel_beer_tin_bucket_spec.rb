@@ -34,17 +34,12 @@ describe Lita::Handlers::OnewheelBeerTinBucket, lita_handler: true do
   it 'doesn\'t explode on 1' do
     send_command 'tinbucket 1'
     expect(replies.count).to eq(1)
-    expect(replies.last).to eq('tinbucket tap 1) Aktien Helles Lager 5.3%, $5')
-  end
-
-  it 'gets nitro' do
-    send_command 'tinbucket nitro'
-    expect(replies.last).to eq('tinbucket tap 30) Nitro- Stout 4.1%, $4')
+    expect(replies.last).to eq('Tin Bucket tap 1) Gloria! 5.0%')
   end
 
   it 'searches for ipa' do
     send_command 'tinbucket ipa'
-    expect(replies.last).to eq('tinbucket tap 50) WFO - IPA 7.5%, $5')
+    expect(replies.last).to eq('Tin Bucket tap 5) Alpha IPA 6.5%')
   end
 
   # it 'searches for brown' do
@@ -54,31 +49,25 @@ describe Lita::Handlers::OnewheelBeerTinBucket, lita_handler: true do
 
   it 'searches for abv >9%' do
     send_command 'tinbucket >9%'
-    expect(replies.count).to eq(8)
-    expect(replies[0]).to eq('tinbucket tap 2) Armored Fist - Big,Black&Hoppy 10.0%, $5')
-    expect(replies[1]).to eq('tinbucket tap 3) Barrel Aged Old Thunderpussy 10.8%, $5')
-    expect(replies.last).to eq('tinbucket tap 46) Sump - Imp Coffee Stout 10.5%, $5')
+    expect(replies.count).to eq(7)
+    expect(replies[1]).to eq("Tin Bucket tap 7) Peche 'n Brett 10.0%")
   end
 
   it 'searches for abv > 9%' do
     send_command 'tinbucket > 9%'
-    expect(replies.count).to eq(8)
-    expect(replies[0]).to eq('tinbucket tap 2) Armored Fist - Big,Black&Hoppy 10.0%, $5')
-    expect(replies[1]).to eq('tinbucket tap 3) Barrel Aged Old Thunderpussy 10.8%, $5')
-    expect(replies.last).to eq('tinbucket tap 46) Sump - Imp Coffee Stout 10.5%, $5')
+    expect(replies.count).to eq(7)
+    expect(replies[1]).to eq("Tin Bucket tap 7) Peche 'n Brett 10.0%")
   end
 
   it 'searches for abv >= 9%' do
     send_command 'tinbucket >= 9%'
-    expect(replies.count).to eq(10)
-    expect(replies[0]).to eq('tinbucket tap 2) Armored Fist - Big,Black&Hoppy 10.0%, $5')
+    expect(replies.count).to eq(8)
     expect(replies.last).to eq('tinbucket tap 46) Sump - Imp Coffee Stout 10.5%, $5')
   end
 
   it 'searches for abv <4.1%' do
     send_command 'tinbucket <4.1%'
     expect(replies.count).to eq(2)
-    expect(replies[0]).to eq('tinbucket tap 15) Grapefruit Radler 2.5%, $5')
     expect(replies.last).to eq('tinbucket tap 38) Prairie-Vous Francais - Saison   Just Tapped 3.9%, $5')
   end
 

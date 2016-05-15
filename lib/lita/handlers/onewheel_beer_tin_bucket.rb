@@ -42,14 +42,13 @@ module Lita
             help: {'tapslow' => 'Show me the highest abv keg.'}
 
       def send_response(tap, datum, response)
-        reply = "tinbucket tap #{tap}) #{get_tap_type_text(datum[:type])}"
+        reply = "Tin Bucket tap #{tap}) #{get_tap_type_text(datum[:type])}"
         # reply += "#{datum[:brewery]} "
         reply += "#{datum[:name]} "
         # reply += "- #{datum[:desc]}, "
         # reply += "Served in a #{datum[1]['glass']} glass.  "
         # reply += "#{datum[:remaining]}"
-        reply += "#{datum[:abv]}%, "
-        reply += "$#{datum[:price].to_s.sub '.0', ''}"
+        reply += "#{datum[:abv]}%"
 
         Lita.logger.info "send_response: Replying with #{reply}"
 
@@ -85,7 +84,7 @@ module Lita
           beer_name = beer_node.css('.beverageName').children.to_s
           beer_type = beer_node.css('.beverageStyle').children.to_s
           beer_location = beer_node.css('.producerLocation').children.to_s
-          abv = beer_node.css('.abv').children.to_s.sub /\d+\.*\d*\s*/, ''
+          abv = beer_node.css('.abv').children.to_s.sub /%\s*/, ''
           ibu = beer_node.css('.ibu').children.to_s
           full_text_search = "#{brewery} #{beer_name} #{beer_type} #{beer_location}"  # #{beer_desc.to_s.gsub /\d+\.*\d*%*/, ''}
 

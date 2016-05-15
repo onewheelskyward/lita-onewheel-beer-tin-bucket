@@ -28,7 +28,7 @@ describe Lita::Handlers::OnewheelBeerTinBucket, lita_handler: true do
 
   it 'displays details for tap 4' do
     send_command 'tinbucket 4'
-    expect(replies.last).to eq('tinbucket tap 4) Blind Pig - IPA 6.1%, $6')
+    expect(replies.last).to eq('Tin Bucket tap 4) Sticky Hands Hop Experience 8.8%')
   end
 
   it 'doesn\'t explode on 1' do

@@ -60,7 +60,7 @@ module Lita
         Lita.logger.debug 'get_source started'
         unless (response = redis.get('page_response'))
           Lita.logger.info 'No cached result found, fetching.'
-          response = RestClient.get('http://tinbucketbar.com/menu')
+          response = RestClient.get('http://fbpage.digitalpour.com/?companyID=55a59fd25e002c0a205393cc&locationID=1')
           redis.setex('page_response', 1800, response)
         end
         parse_response response
@@ -73,21 +73,21 @@ module Lita
         Lita.logger.debug 'parse_response started.'
         gimme_what_you_got = {}
         noko = Nokogiri.HTML response
-        noko.css('table.table tbody tr').each_with_index do |beer_node, index|
-          # gimme_what_you_got
-          tap_name = (index + 1).to_s
+        index = 1
 
-          brewery = beer_node.css('td')[2].children.to_s
-          beer_name = beer_node.css('td')[0].children.text.to_s
-          beer_type = beer_name.match(/\s*-\s*\w+$/).to_s
-          beer_type.sub! /\s+-\s+/, ''
-          # beer_desc = get_beer_desc(beer_node)
-          abv = beer_node.css('td')[4].children.to_s
-          full_text_search = "#{brewery} #{beer_name.to_s.gsub /(\d+|')/, ''}"  # #{beer_desc.to_s.gsub /\d+\.*\d*%*/, ''}
-          price_node = beer_node.css('td')[1].children.to_s
-          price = (price_node.sub /\$/, '').to_f
+        noko.css("div.beverageInfo[name='beerLayout']").each do |beer_node|
+          next if beer_node.css('.beverageName').children.to_s == ''
 
-          Lita.logger.debug "Price #{price}"
+          tap_name = index.to_s
+          index += 1
+
+          brewery = beer_node.css('.producerName').children.to_s
+          beer_name = beer_node.css('.beverageName').children.to_s
+          beer_type = beer_node.css('.beverageStyle').children.to_s
+          beer_location = beer_node.css('.producerLocation').children.to_s
+          abv = beer_node.css('.abv').children.to_s.sub /\d+\.*\d*\s*/, ''
+          ibu = beer_node.css('.ibu').children.to_s
+          full_text_search = "#{brewery} #{beer_name} #{beer_type} #{beer_location}"  # #{beer_desc.to_s.gsub /\d+\.*\d*%*/, ''}
 
           gimme_what_you_got[tap_name] = {
           #     type: tap_type,
@@ -96,7 +96,7 @@ module Lita
               name: beer_name.to_s,
               desc: beer_type.to_s,
               abv: abv.to_f,
-              price: price,
+              # price: price,
               search: full_text_search
           }
         end

@@ -9,32 +9,32 @@ module Lita
       route /^tinbucket$/i,
             :taps_list,
             command: true,
-            help: {'taps' => 'Display the current Tin Bucket taps.'}
+            help: {'tinbucket' => 'Display the current Tin Bucket taps.'}
 
       route /^tinbucket ([\w ]+)$/i,
             :taps_deets,
             command: true,
-            help: {'taps 4' => 'Display the tap 4 deets, including prices.'}
+            help: {'tinbucket 4' => 'Display the tap 4 deets, including prices.'}
 
       route /^tinbucket ([<>=\w.\s]+)%$/i,
             :taps_by_abv,
             command: true,
-            help: {'taps >4%' => 'Display beers over 4% ABV.'}
+            help: {'tinbucket >4%' => 'Display beers over 4% ABV.'}
 
       route /^tinbucket (roulette|random|rand|ran|ra|r)$/i,
             :taps_by_random,
             command: true,
-            help: {'taps roulette' => 'Can\'t decide?  Let me do it for you!'}
+            help: {'tinbucket roulette' => 'Can\'t decide?  Let me do it for you!'}
 
       route /^tinbucketabvlow$/i,
             :taps_low_abv,
             command: true,
-            help: {'tapslow' => 'Show me the lowest abv keg.'}
+            help: {'tinbucketabvlow' => 'Show me the lowest abv keg.'}
 
       route /^tinbucketabvhigh$/i,
             :taps_high_abv,
             command: true,
-            help: {'tapslow' => 'Show me the highest abv keg.'}
+            help: {'tinbucketabvhigh' => 'Show me the highest abv keg.'}
 
       def send_response(tap, datum, response)
         reply = "Tin Bucket tap #{tap}) #{get_tap_type_text(datum[:type])}"

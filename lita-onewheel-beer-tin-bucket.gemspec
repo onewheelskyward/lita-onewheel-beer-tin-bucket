@@ -1,6 +1,6 @@
 Gem::Specification.new do |spec|
   spec.name          = 'lita-onewheel-beer-tin-bucket'
-  spec.version       = '0.1.2'
+  spec.version       = '0.1.3'
   spec.authors       = ['Andrew Kreps']
   spec.email         = ['andrew.kreps@gmail.com']
   spec.description   = %q{Lita interface to Tin Bucket's listings.}
@@ -14,7 +14,7 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ['lib']
 
-  spec.add_runtime_dependency 'lita', '~> 4.7'
+  spec.add_runtime_dependency 'lita', '~> 4'
   spec.add_runtime_dependency 'rest-client', '~> 1.8'
   spec.add_runtime_dependency 'nokogiri', '~> 1.6'
   spec.add_runtime_dependency 'sanitize', '~> 4.0'
